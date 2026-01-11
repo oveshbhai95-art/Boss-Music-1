@@ -1,12 +1,31 @@
-FROM python:3.9.7-slim-buster
-RUN apt update && apt upgrade -y
-RUN apt install git curl python3-pip ffmpeg -y
-RUN pip3 install -U pip
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
-RUN apt-get install -y nodejs
-RUN npm install -g npm@7.22.0
-RUN mkdir /app/
-COPY . /app/
-WORKDIR /app/
-RUN pip3 install -U -r requirements.txt
-CMD python3 main.py
+# Latest stable Python image (Slim-Bullseye is best for bot deployment)
+FROM python:3.10-slim-bullseye
+
+# System updates and required tools
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y --no-install-recommends \
+    git \
+    curl \
+    ffmpeg \
+    python3-pip \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install Latest Node.js (Node 20.x is current LTS)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs && \
+    npm install -g npm@latest
+
+# Set working directory
+WORKDIR /app
+
+# Upgrade pip
+RUN pip3 install --no-cache-dir -U pip
+
+# Copy all files to /app
+COPY . .
+
+# Install Python requirements
+RUN pip3 install --no-cache-dir -U -r requirements.txt
+
+# Start the bot
+CMD ["python3", "main.py"]
