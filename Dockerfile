@@ -1,5 +1,5 @@
-# Latest stable Python image (Slim-Bullseye is best for bot deployment)
-FROM python:3.10-slim-bullseye
+# Python 3.9 use kar rahe hain taaki 'Callable' wala error na aaye
+FROM python:3.9-slim-bullseye
 
 # System updates and required tools
 RUN apt-get update && apt-get upgrade -y && \
@@ -10,7 +10,7 @@ RUN apt-get update && apt-get upgrade -y && \
     python3-pip \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install Latest Node.js (Node 20.x is current LTS)
+# Install Node.js (Music bots ke liye Node stable hona chahiye)
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
     apt-get install -y nodejs && \
     npm install -g npm@latest
