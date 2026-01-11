@@ -104,7 +104,8 @@ async def generate_cover(title, thumbnail):
     os.remove("background.png")
 
 
-@Client.on_message(command(["playlist", f"playlist@{BOT_USERNAME}"]) & filters.group & ~filters.edited)
+# --- Fixed Line 107: Removed ~filters.edited ---
+@Client.on_message(command(["playlist", f"playlist@{BOT_USERNAME}"]) & filters.group)
 async def playlist(client, message):
     global que
     if message.chat.id in DISABLED_GROUPS:
@@ -169,7 +170,8 @@ def r_ply(type_):
     return mar
 
 
-@Client.on_message(command(["player", f"player@{BOT_USERNAME}"]) & filters.group & ~filters.edited)
+# --- Fixed Line 181: Removed ~filters.edited ---
+@Client.on_message(command(["player", f"player@{BOT_USERNAME}"]) & filters.group)
 @authorized_users_only
 async def settings(client, message):
     playing = None
@@ -187,8 +189,9 @@ async def settings(client, message):
         await message.reply("**Please turn on the voice chat first.**")
 
 
+# --- Fixed Line 197: Removed ~filters.edited ---
 @Client.on_message(
-    command(["musicpy", f"musicplayer@{BOT_USERNAME}"]) & ~filters.edited & ~filters.bot & ~filters.private
+    command(["musicpy", f"musicplayer@{BOT_USERNAME}"]) & ~filters.bot & ~filters.private
 )
 @authorized_users_only
 async def hfmm(_, message):
@@ -414,6 +417,7 @@ async def m_cb(b, cb):
             await cb.answer("Assistant is not connected to voice chat!", show_alert=True)
 
 
+# play command uses other_filters from helpers.filters, so we already fixed it there.
 @Client.on_message(command(["playy", f"play@{BOT_USERNAME}"]) & other_filters)
 async def play(_, message: Message):
     global que
