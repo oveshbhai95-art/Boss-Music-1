@@ -24,12 +24,12 @@ bot = Bot(
     plugins=dict(root="handlers"),
 )
 
-# Assistant Client ko naye sire se banaya session string ke sath
-# Taaki ye phone number na maange
+# Assistant Client - FIX: Naam chhota rakha aur string session parameter mein di
 callsmusic.client = Client(
-    STRING_SESSION,
+    name="Assistant",
     api_id=API_ID,
-    api_hash=API_HASH
+    api_hash=API_HASH,
+    session_string=STRING_SESSION
 )
 Assistant = callsmusic.client
 
@@ -47,7 +47,6 @@ async def start_services():
         print(f"[ERROR]: Assistant login failed: {e}")
         return
 
-    # Callsmusic run function
     run()
 
 if __name__ == "__main__":
