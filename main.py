@@ -5,7 +5,9 @@ import requests
 import asyncio
 import os
 import re
+# --- જરૂરી સુધારો: InlineKeyboardMarkup અને InlineKeyboardButton અહીં ઉમેર્યા છે ---
 from pyrogram import Client as Bot, filters, Client, idle
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from pyrogram.errors import FloodWait
 from callsmusic import callsmusic
 from config import API_ID, API_HASH, BOT_TOKEN, BG_IMAGE
@@ -85,23 +87,24 @@ def get_size(size):
 @bot.on_message(filters.command("start") & filters.private)
 async def start_cmd(client, message):
     me = await client.get_me()
+    # --- સુધારો: 'pyrogram.types.' દૂર કરીને સીધું બટનનું નામ લખ્યું છે ---
     buttons = [
-        [pyrogram.types.InlineKeyboardButton("📥 ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ᴄʜᴀɴɴᴇʟ 📥", url=f"http://t.me/{me.username}?startchannel=true")],
+        [InlineKeyboardButton("📥 ᴀᴅᴅ ᴍᴇ ᴛᴏ ʏᴏᴜʀ ᴄʜᴀɴɴᴇʟ 📥", url=f"http://t.me/{me.username}?startchannel=true")],
         [
-            pyrogram.types.InlineKeyboardButton("🌤 ᴜᴘᴅᴀᴛᴇ 🌤", url="https://t.me/VJ_Botz"),
-            pyrogram.types.InlineKeyboardButton("🍁 sᴜᴘᴘᴏʀᴛ 🍁", url="https://t.me/KingVJ01")
+            InlineKeyboardButton("🌤 ᴜᴘᴅᴀᴛᴇ 🌤", url="https://t.me/VJ_Botz"),
+            InlineKeyboardButton("🍁 sᴜᴘᴘᴏʀᴛ 🍁", url="https://t.me/KingVJ01")
         ],
         [
-            pyrogram.types.InlineKeyboardButton("ʜᴇʟᴘ ⚙️", callback_data="help_data"),
-            pyrogram.types.InlineKeyboardButton("ᴀʙᴏᴜᴛ 💌", callback_data="about_data")
+            InlineKeyboardButton("ʜᴇʟᴘ ⚙️", callback_data="help_data"),
+            InlineKeyboardButton("ᴀʙᴏᴜᴛ 💌", callback_data="about_data")
         ]
     ]
     await message.reply_photo(
         photo=START_PIC,
         caption=f"<b>ʜᴇʏ {message.from_user.mention} 👋 ʜᴏᴡ ᴀʀᴇ ʏᴏᴜ</b>\n\n"
-                f"🔘 ɪ ᴀᴍ ᴜʟᴛʀᴀ ᴘᴏᴡᴇʀғᴜʟ ᴀᴜᴛᴏ ᴄᴀᴘᴛɪᴏɴ + ᴍᴜsɪᴄ ʙᴏᴛ\n"
+                f"🔘 ɪ ᴀᴍ ᴜʟᴛʀᴀ ᴘᴏᴡᴇʀғᴜʟ ᴀᴜᴛᴏ ᴄᴀપ્ટન + ᴍᴜsɪᴄ ʙᴏᴛ\n"
                 f"🔘 ɪ ᴄᴀɴ ᴀᴜᴛᴏᴍᴀᴛɪᴄᴀʟʟʏ ᴇᴅɪᴛ ғɪʟᴇ ᴄᴀᴘᴛɪᴏɴs ᴀɴᴅ ᴘʟᴀʏ ᴍᴜsɪᴄ!",
-        reply_markup=pyrogram.types.InlineKeyboardMarkup(buttons)
+        reply_markup=InlineKeyboardMarkup(buttons)
     )
 
 @bot.on_message(filters.channel & filters.media)
