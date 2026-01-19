@@ -7,7 +7,6 @@ youtube_search_python
 requests
 aiohttp
 aiofiles
-asyncio
 youtube_search
 search_engine_parser
 ffmpeg-python
@@ -18,4 +17,5 @@ wget
 motor
 dnspython
 bs4
-pyaml
+PyYAML
+Flask
